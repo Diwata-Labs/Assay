@@ -2,9 +2,9 @@
 
 ## 1. Purpose
 
-These rules govern all agent and tool behavior in this repository.
-
 The project is **Assay** — an independent verification layer for software projects. It runs automated tests on a schedule, collects frontend bug reports via a browser SDK, and outputs structured task packets compatible with Grain. Primary language: Python (backend + CLI). Secondary: TypeScript (browser SDK).
+
+These rules govern all agent and tool behavior in this repository.
 
 ---
 
@@ -124,6 +124,9 @@ If the project maintains a canonical interface or command-contract doc, this rul
 ### Task unit
 - Every implementation action must map to a specific task packet.
 - One packet should represent one coherent task.
+- Small fixes and hotfixes still use task packets.
+- Use smaller packet scope for tiny fixes instead of bypassing the task system.
+- Prefer `grain task close --quick` for low-overhead closure when the fix is straightforward and the review bundle can stay minimal.
 
 ### Before execution
 Confirm:
@@ -201,15 +204,16 @@ Agents may prepare proposals, not finalize them.
 
 ---
 
-## 11. Non-Goals for v1
+## 11. Non-Goals for the Current Phase
 
-Do not introduce unless explicitly required:
-- GUI interfaces
+[Define your project's explicit non-goals here — things that are out of scope for the current development phase. Keeping this list up to date helps agents and reviewers avoid scope creep.]
+
+Examples of common non-goals:
+- GUI or dashboard interfaces
 - database-backed state
 - multi-user coordination
-- autonomous coding execution
-- complex plugin ecosystems
-- deeply abstracted orchestration layers
+- real-time or event-driven processing
+- third-party plugin systems
 
 ---
 

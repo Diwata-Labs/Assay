@@ -1,31 +1,31 @@
 # Current Focus
 
 ## Current Phase
-Phase 2 — CLI Skeleton
+Phase 3 — Playwright + Docker Runner
 
 ---
 
 ## Active Focus
 
-Phase 1 closed. All foundation deliverables complete — scaffold, schemas, and developer tooling.
+Phase 2 closed. CLI skeleton complete — all commands on surface, config loader wired, stub policy enforced, 37 tests passing.
 
-Phase 2 begins after Grain patches (GB-001, GB-003) are applied by the project owner.
-
-First task: P2-T01 — Implement CLI entrypoint with Typer (Q2 resolved: Typer).
+First task: P3-T01 — Write Dockerfile for the Playwright runner image.
 
 ---
 
 ## Immediate Priorities
 
-1. Wait for Grain patches before starting Phase 2 execution
-2. P2-T01: Typer entrypoint, `assay` command, `--version` / `--help` / `--config` flags
-3. P2-T02: `assay.toml` config parsing with validation
-4. P2-T03 through P2-T05: stub commands, exit codes per spec §3/§5.1, CLI tests
+1. P3-T01: Dockerfile (Playwright + browsers + deps)
+2. P3-T02: Runner module (start container, pass params, stream output)
+3. P3-T03: Artifact collection (screenshots, logs, pass/fail)
+4. P3-T04: Wire `assay run` to runner module
+5. P3-T05: Runner integration test (real Docker run against a test URL)
 
 ---
 
 ## Active Constraints
 
-- All CLI commands must enforce exit codes per CLI spec §3 and §5.1 — no silent stubs
 - Docker must be available in all environments that run the Playwright runner
+- Every test run executes inside a fresh, ephemeral Docker container — no persistent container state
+- `assay run` must exit 0 on success, 3 on test failure, 1 on runner error (cli_spec §3)
 - Canonical docs require human approval before direct edits

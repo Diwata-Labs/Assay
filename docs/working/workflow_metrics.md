@@ -33,3 +33,34 @@
 - None
 
 ---
+
+## Phase 2 — CLI Skeleton — CLOSED 2026-04-15
+
+### Task Summary
+| Task | Status | Notes |
+|------|--------|-------|
+| P2-T01 CLI entrypoint (Typer) | done | All 5 command groups wired |
+| P2-T02 assay.toml config loader | done | ConfigError → exit 2; tomllib stdlib |
+| P2-T03 Stub policy enforcement | done | No-op — satisfied by P2-T01 |
+| P2-T04 Global flags | done | `--verbose` added (was missing from P2-T01) |
+| P2-T05 CLI unit tests | done | 37 pytest / 1 vitest passing |
+
+### Phase Health
+- **Blockers encountered:** 0
+- **Open questions resolved:** none new
+- **Change proposals:** none
+- **Tests at phase close:** 37 pytest / 1 vitest — all passing
+- **Lint/typecheck at phase close:** clean
+
+### System Improvements Identified
+
+**Fix now (before Phase 3):**
+- GB-005: Phase review/close should be a hard gate in `grain workflow next` — not just a `stop_reason`. Currently bypassable by updating `current_focus.md` manually. Should require an explicit `grain phase close` command before routing to the next phase.
+
+**Batch next phase:**
+- None
+
+**Ignore:**
+- None
+
+---

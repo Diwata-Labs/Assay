@@ -1,7 +1,7 @@
 # Implementation Plan
 
 **Project:** Assay
-**Status:** Active — Phase 2
+**Status:** Active — Phase 3
 **Last updated:** 2026-04-15
 
 ---
@@ -31,7 +31,7 @@ No phase should be started before its predecessor's exit criteria are satisfied.
 
 ---
 
-## Phase 2 — CLI Skeleton
+## Phase 2 — CLI Skeleton — CLOSED 2026-04-15
 
 **Goal:** Implement the `assay` CLI entrypoint with all v1 commands wired up per stub policy (§5.1 of CLI spec).
 

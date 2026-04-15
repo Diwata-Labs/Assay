@@ -116,6 +116,14 @@ working:
       - closing_phase
       - reviewing_workflow_health
 
+  - id: tooling_notes
+    path: docs/working/tooling_notes.md
+    purpose: Lightweight inbox for workflow friction, tool bugs, and mid-session observations
+    authority: informational
+    editable_by_agents: true
+    read_when:
+      - never
+
   - id: v2_plan
     path: docs/working/v2_plan.md
     purpose: Working-layer transition plan for post-v1 sequencing and v2 readiness
@@ -144,14 +152,6 @@ working:
       - planning_v2
       - planning_onboarding
       - adopting_existing_projects
-
-  - id: grain_bugs
-    path: docs/working/grain_bugs.md
-    purpose: Bugs and workflow gaps in Grain discovered while building Assay — to be patched upstream
-    authority: informational
-    editable_by_agents: true
-    read_when:
-      - never_auto_load
 
 runtime:
   - id: project_rules

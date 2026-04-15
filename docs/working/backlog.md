@@ -23,11 +23,11 @@ Status values: `pending` | `ready` | `in_progress` | `blocked` | `done`
 
 | ID | Task | Status | Dependencies | Notes |
 |----|------|--------|--------------|-------|
-| P2-T01 | Implement CLI entrypoint with Click or Typer | pending | P1-T01 | Choose framework (see Q2) |
-| P2-T02 | Implement `assay.toml` config parsing with validation | pending | P2-T01 | |
-| P2-T03 | Wire all commands with stub policy enforcement (exit codes per spec §3, §5.1) | pending | P2-T01 | No silent stubs |
-| P2-T04 | Implement `--help`, `--version`, `--config` global flags | pending | P2-T01 | |
-| P2-T05 | CLI unit tests (config parsing, flag handling, exit codes) | pending | P2-T01–P2-T04 | |
+| P2-T01 | Implement CLI entrypoint with Click or Typer | done | P1-T01 | Typer chosen (Q2 resolved) |
+| P2-T02 | Implement `assay.toml` config parsing with validation | done | P2-T01 | |
+| P2-T03 | Wire all commands with stub policy enforcement (exit codes per spec §3, §5.1) | done | P2-T01 | No silent stubs |
+| P2-T04 | Implement `--help`, `--version`, `--config` global flags | done | P2-T01 | `--verbose` also added |
+| P2-T05 | CLI unit tests (config parsing, flag handling, exit codes) | done | P2-T01–P2-T04 | |
 
 ---
 
@@ -35,8 +35,8 @@ Status values: `pending` | `ready` | `in_progress` | `blocked` | `done`
 
 | ID | Task | Status | Dependencies | Notes |
 |----|------|--------|--------------|-------|
-| P3-T01 | Write `Dockerfile` for Playwright runner image | pending | P1-T01 | Playwright + browsers + deps |
-| P3-T02 | Implement runner module (start container, pass params, stream output) | pending | P3-T01 | |
+| P3-T01 | Write `Dockerfile` for Playwright runner image | done | P1-T01 | Playwright + browsers + deps |
+| P3-T02 | Implement runner module (start container, pass params, stream output) | done | P3-T01 | |
 | P3-T03 | Implement artifact collection (screenshots, logs, pass/fail from container) | pending | P3-T02 | |
 | P3-T04 | Wire `assay run` to runner module | pending | P3-T02, P2-T03 | |
 | P3-T05 | Runner integration test (real Docker run against a test URL) | pending | P3-T04 | Requires Docker in CI |
