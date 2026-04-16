@@ -64,3 +64,34 @@
 - None
 
 ---
+
+## Phase 3 — Playwright + Docker Runner — CLOSED 2026-04-16
+
+### Task Summary
+| Task | Status | Notes |
+|------|--------|-------|
+| P3-T01 Playwright Docker image | done | Dockerfile + run.js + package.json; `docker build` deferred |
+| P3-T02 Python runner module | done | `runner.run()` wraps subprocess Docker call; fully mocked in tests |
+| P3-T03 Artifact collection | done | `collect_artifacts()` + `ArtifactBundle`; 7 tests |
+| P3-T04 Wire assay run command | done | CLI exits 0/3/1 per outcome; 6 mock tests |
+| P3-T05 Runner integration test | done | `docker build` + `assay run --target https://example.com` → exit 0, result.json + screenshot.png written |
+
+### Phase Health
+- **Blockers encountered:** 1 (P3-T05: Docker PATH not set in Claude Code session — resolved by adding fallback path lookup in runner.py; package.json version pin fixed from `^1.44.0` to `1.44.0`)
+- **Open questions resolved:** none new
+- **Change proposals:** none
+- **Tests at phase close:** 56 pytest / 1 vitest — all passing
+- **Lint/typecheck at phase close:** clean
+
+### System Improvements Identified
+
+**Fix now (before Phase 4):**
+- None
+
+**Batch next phase:**
+- None
+
+**Ignore:**
+- None
+
+---

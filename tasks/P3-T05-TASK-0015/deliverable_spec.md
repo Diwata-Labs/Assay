@@ -1,19 +1,20 @@
-# Deliverable Spec: TASK-####
+# Deliverable Spec: P3-T05-TASK-0015
 
 ## Required Output
 
 ### New Files
-- [path] — [brief description]
+- none
 
 ### Modified Files
-- [path] — [what changes]
+- none (verification only)
 
 ## Acceptance Checklist
-- [ ] [criterion]
-- [ ] [criterion]
-- [ ] All new tests passing
-- [ ] Full test suite passing with no regressions
+- [ ] `docker build -t assay-playwright runner/` exits 0
+- [ ] `assay run --target https://example.com` exits 0
+- [ ] Output directory contains `result.json` and `screenshot.png`
+- [ ] `result.json` has `outcome: "pass"`
 - [ ] review bundle complete in `results.md` and `handoff.md`
 
 ## Not Required
-- [explicitly out of scope for this task]
+- Any code changes — this is a live integration verification
+- CI configuration — deferred to Phase 5
