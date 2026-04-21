@@ -1,7 +1,7 @@
 # Implementation Plan
 
 **Project:** Assay
-**Status:** v0.1.0 Complete — All 9 phases closed
+**Status:** Active — v0.2.0 in planning (Phase 10)
 **Last updated:** 2026-04-15
 
 ---
@@ -157,7 +157,79 @@ No phase should be started before its predecessor's exit criteria are satisfied.
 
 ---
 
-## Deferred (v2)
+---
+
+## v0.2.0 — Cross-Project Usability + Grain Integration
+
+Goal: make Assay installable in any project with `pip install assay`, integrate deeply with Grain workflows (task tagging, auto-detection, submit), implement `assay report`, screenshot persistence, background scheduling, and CI.
+
+---
+
+## Phase 10 — Distribution + CI
+
+**Goal:** Make Assay installable anywhere without cloning the repo, and automate test runs on every push.
+
+**Deliverables:**
+- `python -m build` + publish workflow to PyPI (via GitHub Actions release job)
+- GitHub Actions CI: `pytest` + `ruff` + `mypy` on every push/PR; `vitest` on SDK changes
+- `.github/workflows/ci.yml` and `.github/workflows/release.yml`
+- Version sourced from package metadata (`importlib.metadata`) so `assay --version` always reflects the installed tag
+
+**Exit criteria:** `pip install assay` works from PyPI; CI is green on main; a tagged release triggers the PyPI job.
+
+---
+
+## Phase 11 — Screenshot Persistence + `assay report`
+
+**Goal:** Screenshots are saved as real files alongside every packet; results are readable without opening JSON.
+
+**Deliverables:**
+- **SDK screenshot persistence:** `POST /ingest` saves the base64 screenshot to `assay-output/<packet-id>.png` and sets `artifact_refs` in the packet to the saved file path
+- **Runner screenshot:** verify `screenshot.png` from Docker output is copied into the packet output directory and referenced in `artifact_refs` (it currently records only the temp path)
+- **`assay report` command:** reads all `assay-*.json` from output dir, renders a table (id, outcome, severity, summary, screenshot ✓/✗, verified_at)
+- `assay report --format json` for machine-readable output
+- `assay report --filter outcome=fail` for quick filtering
+- Tests: screenshot file written on ingest; artifact_refs populated; report renders correct rows
+
+**Exit criteria:** After `assay run` or SDK `capture()`, the output directory contains both the packet JSON and a `<packet-id>.png` screenshot; `assay report` lists it with a screenshot indicator.
+
+---
+
+## Phase 12 — Grain Task Tagging + `assay run --task-id`
+
+**Goal:** Assay runs can be explicitly or automatically tagged with the active Grain task ID, and the resulting packet can be submitted back to Grain.
+
+**Deliverables:**
+- `assay run --task-id TASK-0070`: populates `task_id` field in the output packet
+- Grain auto-detection: if `docs/working/current_task.md` exists in cwd (or `GRAIN_TASK_ID` env var is set), auto-populate `task_id` without requiring the flag
+- `assay submit --packet <path>`: validates the packet, then copies it to a configurable Grain-visible location
+- `[grain]` section in `assay.toml`: `project_root`, `output_path`
+- `assay run --submit` flag: run + submit in one step
+- SDK `capture()` accepts an optional `taskId` field passed through to the ingest payload
+- Grain project quickstart section in README
+- Tests covering auto-detect, submit, `--task-id` flag, and SDK taskId passthrough
+
+**Exit criteria:** In a Grain project directory, `assay run --target <url>` auto-tags the packet with the current task ID; `assay run --submit` places the packet where Grain can pick it up.
+
+---
+
+## Phase 13 — Background Scheduler (Daemon Mode)
+
+**Goal:** `assay schedule run` can operate as a background daemon — start, stop, and query status without occupying a terminal.
+
+**Deliverables:**
+- `assay schedule start`: launches scheduler as background process, writes PID to `~/.assay/scheduler.pid`
+- `assay schedule stop`: sends SIGTERM to the PID, cleans up
+- `assay schedule status`: running / stopped + next-run time per schedule
+- PID file locking to prevent double-start
+- Log file at `~/.assay/scheduler.log`
+- Tests for start/stop/status lifecycle; daemon isolation via subprocess mock
+
+**Exit criteria:** `assay schedule start` returns immediately; `assay schedule status` shows running; `assay schedule stop` terminates cleanly; double-start is rejected.
+
+---
+
+## Deferred (v0.3+ / v2)
 
 - Web UI / dashboard
 - Bug bounty portal (internal + external verification workflow)
@@ -166,3 +238,4 @@ No phase should be started before its predecessor's exit criteria are satisfied.
 - SaaS hosting / managed infrastructure
 - Database-backed output store
 - Advanced analytics and reporting
+- `assay report` HTML view

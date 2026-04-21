@@ -1,7 +1,7 @@
 # Backlog
 
 **Project:** Assay
-**Last updated:** 2026-04-20
+**Last updated:** 2026-04-21
 
 Status values: `pending` | `ready` | `in_progress` | `blocked` | `done`
 
@@ -55,3 +55,49 @@ Status values: `pending` | `ready` | `in_progress` | `blocked` | `done`
 | P9-T02 | Finalize npm package metadata | done | P8 complete | package.json: author, license, keywords |
 | P9-T03 | Document Docker runner image | done | P8 complete | Build instructions in README.md |
 | P9-T04 | First-run installation guide | done | P9-T01–P9-T03 | README.md: requirements, quick start, SDK, dev setup |
+
+---
+
+## v0.2.0
+
+---
+
+## Phase 10 — Distribution + CI
+
+| ID | Task | Status | Dependencies | Notes |
+|----|------|--------|--------------|-------|
+| P10-T01 | PyPI publish workflow (GitHub Actions release job) | pending | P9 complete | `python -m build` + twine; version from importlib.metadata |
+| P10-T02 | GitHub Actions CI: pytest + ruff + mypy + vitest | pending | P9 complete | Runs on every push and PR |
+
+---
+
+## Phase 11 — Screenshot Persistence + `assay report`
+
+| ID | Task | Status | Dependencies | Notes |
+|----|------|--------|--------------|-------|
+| P11-T01 | Save SDK screenshot to disk on ingest; populate artifact_refs | pending | P5 complete | `<packet-id>.png` in output dir |
+| P11-T02 | Verify runner screenshot is copied + referenced in artifact_refs | pending | P3-T05 | Currently records temp path only |
+| P11-T03 | Implement `assay report` command (table + json + filter) | pending | P4 complete | Reads assay-*.json; outcome table |
+
+---
+
+## Phase 12 — Grain Task Tagging + `assay submit`
+
+| ID | Task | Status | Dependencies | Notes |
+|----|------|--------|--------------|-------|
+| P12-T01 | `assay run --task-id` flag; populate task_id in packet | pending | P4 complete | |
+| P12-T02 | Grain auto-detection: read current_task.md / GRAIN_TASK_ID env | pending | P12-T01 | |
+| P12-T03 | `assay submit --packet <path>` command + [grain] config section | pending | P12-T01 | |
+| P12-T04 | `assay run --submit` one-step flag | pending | P12-T03 | |
+| P12-T05 | SDK taskId passthrough to ingest payload | pending | P6 complete | Optional field in capture() |
+
+---
+
+## Phase 13 — Background Scheduler (Daemon Mode)
+
+| ID | Task | Status | Dependencies | Notes |
+|----|------|--------|--------------|-------|
+| P13-T01 | `assay schedule start`: background process + PID file | pending | P7 complete | |
+| P13-T02 | `assay schedule stop`: SIGTERM + PID cleanup | pending | P13-T01 | |
+| P13-T03 | `assay schedule status`: running/stopped + next-run times | pending | P13-T01 | |
+| P13-T04 | PID file locking; log file at ~/.assay/scheduler.log | pending | P13-T01 | |
