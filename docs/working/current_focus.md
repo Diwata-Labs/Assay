@@ -1,34 +1,42 @@
 # Current Focus
 
 ## Current Phase
-Phase 10 — Distribution + CI (v0.2.0 start)
+Phase 13 — v0.2.0 complete
 
 ---
 
 ## Active Focus
 
-v0.1.0 shipped (Phases 1–9 complete, pushed to main). Starting v0.2.0 — four phases planned:
-- Phase 10: PyPI publish + GitHub Actions CI
-- Phase 11: Screenshot persistence to disk + `assay report` command
-- Phase 12: Grain task tagging (`--task-id`, auto-detect, `assay submit`)
-- Phase 13: Background scheduler daemon (start/stop/status)
+v0.2.0 shipped (Phases 10–13 complete). All four v0.2.0 phases done:
+- Phase 10: GitHub Actions CI + PyPI release workflow ✓
+- Phase 11: Screenshot persistence + `assay report` ✓
+- Phase 12: Grain task tagging + `assay submit` ✓
+- Phase 13: Background scheduler daemon ✓
 
-Grain integration (Phase 12) is the highest-priority new capability — allows Assay to be used inside any Grain project with zero manual wiring.
+250 pytest passing, ruff + mypy clean.
 
 ---
 
-## Immediate Priorities
+## v0.2.0 Summary
 
-1. P10-T01: PyPI publish via GitHub Actions release workflow
-2. P10-T02: CI workflow (pytest + ruff + mypy + vitest on every push/PR)
-3. → Phase 11: screenshot persistence + assay report
-4. → Phase 12: Grain task tagging + submit
+**New commands:**
+- `assay report` — renders packet table; `--format json`, `--filter outcome=fail`
+- `assay submit --packet <path>` — validates schema, copies to `[grain].output_path`
+- `assay schedule start/stop/status` — background daemon with PID + log file
+
+**New flags:**
+- `assay run --task-id TASK-XXXX` — explicit Grain task tagging
+- `assay run --submit` — run + submit in one step
+- Auto-detection: `GRAIN_TASK_ID` env or `docs/working/current_task.md`
+
+**Screenshot persistence:**
+- SDK: `/ingest` saves `{verification_id}.png`; `artifact_refs` populated
+- Runner: `screenshot.png` copied to `{verification_id}.png` in output dir
 
 ---
 
 ## Active Constraints
 
-- `assay report` is currently a stub (exit 1) — must be implemented before v0.2.0 ships
-- SDK screenshot base64 from ingest is currently discarded — must be saved to disk (Phase 11)
-- `assay run --task-id` does not exist yet — CP needed when implemented (Phase 12)
 - Canonical docs require human approval before direct edits
+- `assay schedule start` uses `os.fork()` — POSIX only (no Windows support)
+- PyPI publish not yet triggered (needs a tagged release + PyPI trusted publisher setup)

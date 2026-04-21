@@ -62,42 +62,42 @@ Status values: `pending` | `ready` | `in_progress` | `blocked` | `done`
 
 ---
 
-## Phase 10 — Distribution + CI
+## Phase 10 — Distribution + CI ✓ CLOSED (2 tasks)
 
 | ID | Task | Status | Dependencies | Notes |
 |----|------|--------|--------------|-------|
-| P10-T01 | PyPI publish workflow (GitHub Actions release job) | pending | P9 complete | `python -m build` + twine; version from importlib.metadata |
-| P10-T02 | GitHub Actions CI: pytest + ruff + mypy + vitest | pending | P9 complete | Runs on every push and PR |
+| P10-T01 | PyPI publish workflow (GitHub Actions release job) | done | P9 complete | `.github/workflows/release.yml`; pypa/gh-action-pypi-publish |
+| P10-T02 | GitHub Actions CI: pytest + ruff + mypy + vitest | done | P9 complete | `.github/workflows/ci.yml`; matrix Python 3.11/3.12 |
 
 ---
 
-## Phase 11 — Screenshot Persistence + `assay report`
+## Phase 11 — Screenshot Persistence + `assay report` ✓ CLOSED (3 tasks)
 
 | ID | Task | Status | Dependencies | Notes |
 |----|------|--------|--------------|-------|
-| P11-T01 | Save SDK screenshot to disk on ingest; populate artifact_refs | pending | P5 complete | `<packet-id>.png` in output dir |
-| P11-T02 | Verify runner screenshot is copied + referenced in artifact_refs | pending | P3-T05 | Currently records temp path only |
-| P11-T03 | Implement `assay report` command (table + json + filter) | pending | P4 complete | Reads assay-*.json; outcome table |
+| P11-T01 | Save SDK screenshot to disk on ingest; populate artifact_refs | done | P5 complete | `{verification_id}.png` in output dir; 4 tests |
+| P11-T02 | Verify runner screenshot is copied + referenced in artifact_refs | done | P3-T05 | Copies to `{verification_id}.png` in output dir; 2 tests |
+| P11-T03 | Implement `assay report` command (table + json + filter) | done | P4 complete | --format json, --filter key=val; 10 tests |
 
 ---
 
-## Phase 12 — Grain Task Tagging + `assay submit`
+## Phase 12 — Grain Task Tagging + `assay submit` ✓ CLOSED (5 tasks)
 
 | ID | Task | Status | Dependencies | Notes |
 |----|------|--------|--------------|-------|
-| P12-T01 | `assay run --task-id` flag; populate task_id in packet | pending | P4 complete | |
-| P12-T02 | Grain auto-detection: read current_task.md / GRAIN_TASK_ID env | pending | P12-T01 | |
-| P12-T03 | `assay submit --packet <path>` command + [grain] config section | pending | P12-T01 | |
-| P12-T04 | `assay run --submit` one-step flag | pending | P12-T03 | |
-| P12-T05 | SDK taskId passthrough to ingest payload | pending | P6 complete | Optional field in capture() |
+| P12-T01 | `assay run --task-id` flag; populate task_id in packet | done | P4 complete | 3 tests |
+| P12-T02 | Grain auto-detection: read current_task.md / GRAIN_TASK_ID env | done | P12-T01 | detect_task_id(); 5 tests |
+| P12-T03 | `assay submit --packet <path>` command + [grain] config section | done | P12-T01 | schema-validates before copy; 3 tests |
+| P12-T04 | `assay run --submit` one-step flag | done | P12-T03 | 1 test |
+| P12-T05 | SDK taskId passthrough to ingest payload | done | P6 complete | Optional task_id field in IngestPayload; 2 tests |
 
 ---
 
-## Phase 13 — Background Scheduler (Daemon Mode)
+## Phase 13 — Background Scheduler (Daemon Mode) ✓ CLOSED (4 tasks)
 
 | ID | Task | Status | Dependencies | Notes |
 |----|------|--------|--------------|-------|
-| P13-T01 | `assay schedule start`: background process + PID file | pending | P7 complete | |
-| P13-T02 | `assay schedule stop`: SIGTERM + PID cleanup | pending | P13-T01 | |
-| P13-T03 | `assay schedule status`: running/stopped + next-run times | pending | P13-T01 | |
-| P13-T04 | PID file locking; log file at ~/.assay/scheduler.log | pending | P13-T01 | |
+| P13-T01 | `assay schedule start`: background process + PID file | done | P7 complete | os.fork(); double-start prevention |
+| P13-T02 | `assay schedule stop`: SIGTERM + PID cleanup | done | P13-T01 | stale PID detection |
+| P13-T03 | `assay schedule status`: running/stopped + log file | done | P13-T01 | 11 tests total |
+| P13-T04 | PID file locking; log file at ~/.assay/scheduler.log | done | P13-T01 | log redirect on daemon start |
