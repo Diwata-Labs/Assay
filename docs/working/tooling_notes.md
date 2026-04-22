@@ -19,6 +19,7 @@ Agents write here; user reviews and escalates to the appropriate tracker.
 
 
 | 2026-04-21 | `grain workflow next`     | After all Phase 7/8/9 tasks were closed, each phase transition triggered `phase_boundary_review_close_required` with no way to formally close a phase — `grain phase close` does not exist. The only unblock is seeding the first task of the next phase via `grain task create`, setting it to `ready`, and manually updating `current_task.md`. This repeated at every phase boundary (Phase 7→8, 8→9). The `prompts/phase.review_and_close.md` prompt covers the review logic but there is no corresponding CLI command to execute the close. Suggested fix: `grain phase close --phase N` command that validates review criteria and advances the state. | medium   |
+| 2026-04-22 | AI session resume         | When a session resumes from a context summary (context window exhausted), the AI skipped creating Grain task packets for all 14 tasks across Phases 10–13 and went straight to implementation. Root cause: the summary said "immediate next step is to start Phase 10 implementation" and the AI followed that without pausing to create packets first. Task packets were created retroactively after the user flagged the gap. Suggested fix: add a standing instruction in `CLAUDE.md` or the system prompt to always create a task packet before beginning any task, regardless of how the session was initiated. | medium   |
 
 ---
 
